@@ -6,5 +6,5 @@ from .serializers import CategorySerializer
 
 
 class CategoryListView(generics.ListAPIView):
-    queryset = Category.objects.all().prefetch_related('subcategories')
+    queryset = Category.objects.all().prefetch_related('subcategories', 'image')
     serializer_class = CategorySerializer

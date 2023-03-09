@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from app_catalog.models import Category
+from app_catalog.models import Category, Image
 
 
 class RecursiveCategorySerializer(serializers.Serializer):
@@ -15,8 +15,16 @@ class FilterCategorySerializer(serializers.ListSerializer):
         return super().to_representation(data)
 
 
+
+class IconSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Image
+        fields = ['src', 'alt']
+
+
 class CategorySerializer(serializers.ModelSerializer):
     subcategories = RecursiveCategorySerializer(many=True)
+    image = IconSerializer()
 
     class Meta:
         list_serializer_class = FilterCategorySerializer
