@@ -1,3 +1,6 @@
-Django~=4.1.7
-django-mptt~=0.14.0
-djangorestframework~=3.14.0
+Django==4.1.7
+# django-js-asset==2.0.0
+# django-mptt==0.14.0
+# django-mptt-admin==2.4.1
+djangorestframework==3.14.0
+transliterate==1.10.2
