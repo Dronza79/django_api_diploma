@@ -9,26 +9,26 @@
 //  "fullDescription": "full description of the product",
 //  "href": "/catalog/123",
 //  "freeDelivery": true,
-  "images": [
-    "string"
-  ],
-  "tags": [
-    "string"
-  ],
-  "reviews": [
-    {
-      "author": "Annoying Orange",
-      "email": "no-reply@mail.ru",
-      "text": "rewrewrwerewrwerwerewrwerwer",
-      "rate": 4,
-      "date": "2023-05-05 12:12"
-    }
-  ],
-  "specifications": [
-    {
-      "name": "Size",
-      "value": "XL"
-    }
-  ],
+//  "images": [
+//    "string"
+//  ],
+//  "tags": [
+//    "string"
+//  ],
+//  "reviews": [
+//    {
+//      "author": "Annoying Orange",
+//      "email": "no-reply@mail.ru",
+//      "text": "rewrewrwerewrwerwerewrwerwer",
+//      "rate": 4,
+//      "date": "2023-05-05 12:12"
+//    }
+//  ],
+//  "specifications": [
+//    {
+//      "name": "Size",
+//      "value": "XL"
+//    }
+//  ],
 //  "rating": 4.6
 }
