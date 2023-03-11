@@ -32,7 +32,6 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ['id', 'title', 'category', 'price', 'count', 'slug', "date"]
     list_display_links = ['title']
     list_editable = ['price', 'count']
-    # readonly_fields = ['slug']
     prepopulated_fields = {'slug': ('title',)}
     inlines = [
         PropertyInline,

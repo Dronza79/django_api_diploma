@@ -12,12 +12,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Цена', default=0)
     count = models.PositiveIntegerField(verbose_name='В наличии', default=0)
     date = models.DateTimeField(auto_now=True, verbose_name='Обновлен')
-    specifications = models.ManyToManyField('TitleProperty', through='PropertyProduct')
-
-    # date = models.DateTimeField(auto_now_add=True, verbose_name='Создан')
-    # available = models.BooleanField(default=True, verbose_name='В продаже')
-    # limited = models.BooleanField(default=False, verbose_name='Ограниченная серия')
-    # extra_data = models.ManyToManyField("TitleData", through='ExtraData', verbose_name='Дополнительные данные')
+    feature = models.ManyToManyField('TitleProperty', through='PropertyProduct')
 
     def __str__(self):
         return f'{self.title}'
@@ -35,6 +30,10 @@ class Product(models.Model):
     @property
     def href(self):
         return f'/catalog/{self.pk}'
+
+    @property
+    def images(self):
+        return [str(img) for img in self.pictures.all()]
 
     @property
     def rating(self):
@@ -61,7 +60,7 @@ def get_upload_path(instance, filename):
 
 
 class ImageProduct(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='pictures')
     pic = models.FileField(upload_to=get_upload_path)
 
     def __str__(self):
@@ -80,7 +79,7 @@ class TitleProperty(models.Model):
 
 
 class PropertyProduct(models.Model):
-    device = models.ForeignKey(Product, related_name='properties', on_delete=models.CASCADE, verbose_name='Устройство')
+    device = models.ForeignKey(Product, related_name='specifications', on_delete=models.CASCADE, verbose_name='Устройство')
     name = models.ForeignKey(TitleProperty, on_delete=models.CASCADE, verbose_name='Заголовок')
     value = models.CharField(max_length=255, verbose_name='Значение характеристики')
 
@@ -111,39 +110,3 @@ class PropertyProduct(models.Model):
     # def total_sale(self):
 
     #     return sum(item.quantity for item in self.order_items.all())
-
-
-# class TitleData(models.Model):
-#     title = models.CharField(max_length=100, verbose_name='Заголовок')
-#
-#     def __str__(self):
-#         return self.title
-#
-#     class Meta:
-#         verbose_name = "Наименование"
-#         verbose_name_plural = "Наименования"
-#
-#
-# class ValueData(models.Model):
-#     value = models.CharField(max_length=100, verbose_name='Заголовок')
-#
-#     def __str__(self):
-#         return self.value
-#
-#     class Meta:
-#         verbose_name = "Значение"
-#         verbose_name_plural = "Значения"
-#
-#
-# class ExtraData(models.Model):
-#     title = models.ForeignKey(TitleData, related_name='extradata', on_delete=models.CASCADE, verbose_name="Параметр")
-#     device = models.ForeignKey(
-#         Product, related_name='extradata', on_delete=models.CASCADE, verbose_name='Устройство', db_index=True,)
-#     value = models.ForeignKey(ValueData, related_name='extradata', on_delete=models.CASCADE, verbose_name="Значение")
-#
-#     def __str__(self):
-#         return f'{self.title}: {self.value}'
-#
-#     class Meta:
-#         verbose_name = "Дополнительные данные"
-#         verbose_name_plural = "Сведения"

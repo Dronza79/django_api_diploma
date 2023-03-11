@@ -15,7 +15,6 @@ class FilterCategorySerializer(serializers.ListSerializer):
         return super().to_representation(data)
 
 
-
 class IconSerializer(serializers.ModelSerializer):
     class Meta:
         model = Image
