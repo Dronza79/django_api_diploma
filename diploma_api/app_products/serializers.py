@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Product, PropertyProduct, ImageProduct
+from .models import Product, PropertyProduct, ImageProduct, Review
 
 
 class PropertySerializer(serializers.ModelSerializer):
@@ -19,9 +19,16 @@ class ImageSerializer(serializers.ModelSerializer):
         fields = ['src']
 
 
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = ['author', 'email', 'date', 'rate', 'text']
+
+
 class ProductSerializer(serializers.ModelSerializer):
     # images = ImageSerializer(many=True)
     # images = serializers.FileField(source='images.pic.url')
+    reviews = ReviewSerializer(many=True)
     specifications = PropertySerializer(many=True)
 
     class Meta:

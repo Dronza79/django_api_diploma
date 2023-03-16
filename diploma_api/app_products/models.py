@@ -1,4 +1,7 @@
+from statistics import mean
+
 import transliterate
+from django.contrib import admin
 from django.db import models
 
 
@@ -27,6 +30,10 @@ class Product(models.Model):
         verbose_name = "Товар"
         verbose_name_plural = "Товары"
 
+    @admin.display(description='Количество отзывов')
+    def total_review(self):
+        return int(self.reviews.count())
+
     @property
     def href(self):
         return f'/catalog/{self.pk}'
@@ -36,9 +43,11 @@ class Product(models.Model):
         return [str(img) for img in self.pictures.all()]
 
     @property
+    @admin.display(description='Рейтинг')
     def rating(self):
-        return 4.5
-        # return sum(item.rate for item in self.reviews.all()) / self.reviews.count()
+        if not self.reviews.all():
+            return None
+        return round(mean(item.rate for item in self.reviews.all()), 1)
 
     @property
     def freeDelivery(self):
@@ -50,9 +59,9 @@ class Product(models.Model):
     def tags(self):
         return []
 
-    @property
-    def reviews(self):
-        return []
+    # @property
+    # def reviews(self):
+    #     return []
 
 
 def get_upload_path(instance, filename):
@@ -90,9 +99,25 @@ class PropertyProduct(models.Model):
         verbose_name = "Характеристики"
         verbose_name_plural = "Характеристики"
 
-    # @property
-    # def total_review(self):
-    #     return len(self.comments.all())
+
+class Review(models.Model):
+    prod = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Продукт', related_name='reviews')
+    author = models.CharField(max_length=150, verbose_name='Автор отзыва', blank=True)
+    email = models.CharField(max_length=250, verbose_name='Почта автора', blank=True)
+    date = models.DateTimeField(verbose_name='Дата публикации', blank=True, null=True)
+    rate = models.PositiveSmallIntegerField(verbose_name='Рейтинг')
+    text = models.TextField(verbose_name='Содержание отзыва')
+
+    def __str__(self):
+        return f'отзыв {self.author} о {self.prod.title}'
+
+    class Meta:
+        verbose_name = "Отзыв"
+        verbose_name_plural = "Отзывы о товарах"
+
+
+
+
 
     # @property
     # @admin.display(description='Наименование')

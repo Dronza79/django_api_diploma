@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Product, ImageProduct, PropertyProduct, TitleProperty
+from .models import Product, ImageProduct, PropertyProduct, TitleProperty, Review
 
 
 def register_hidden_models(*model_names):
@@ -24,18 +24,28 @@ class PropertyInline(admin.TabularInline):
     extra = 0
 
 
+class ReviewInLine(admin.StackedInline):
+    model = Review
+    verbose_name = 'Отзывы'
+    extra = 1
+
+
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     ordering = ['id']
     list_per_page = 10
     list_filter = ["category"]
-    list_display = ['id', 'title', 'category', 'price', 'count', 'slug', "date"]
+    list_display = [
+        'id', 'title', 'category', 'price', 'count', 'slug',
+        "date", 'rating', 'total_review'
+    ]
     list_display_links = ['title']
     list_editable = ['price', 'count']
     prepopulated_fields = {'slug': ('title',)}
     inlines = [
         PropertyInline,
         GalleryInline,
+        ReviewInLine,
     ]
     fieldsets = (
         (None, {
@@ -51,4 +61,4 @@ class ProductAdmin(admin.ModelAdmin):
         }),)
 
 
-register_hidden_models(TitleProperty,)
+register_hidden_models(TitleProperty, Review)
