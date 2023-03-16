@@ -26,7 +26,8 @@ class PropertyInline(admin.TabularInline):
 
 class ReviewInLine(admin.StackedInline):
     model = Review
-    verbose_name = 'Отзывы'
+    verbose_name = 'Отзыв'
+    verbose_name_plural = "Отзывы"
     extra = 1
 
 
