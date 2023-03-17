@@ -22,9 +22,11 @@ class ImageSerializer(serializers.ModelSerializer):
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
-        fields = ['author', 'email', 'date', 'rate', 'text']
+        fields = ['author', 'email', 'date', 'rate', 'text', 'prod']
+        read_only_fields = ['date']
+        extra_kwargs = {'prod': {'write_only': True}}
 
-
+        
 class ProductSerializer(serializers.ModelSerializer):
     # images = ImageSerializer(many=True)
     # images = serializers.FileField(source='images.pic.url')
