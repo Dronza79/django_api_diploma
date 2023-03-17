@@ -15,7 +15,10 @@ class ProductDetailView(generics.RetrieveAPIView):
 class ReviewCreatView(APIView):
 
     def post(self, request, **kwargs):
-        print('kwargs=', self.kwargs)
-        print('request=', request.data)
-        return Response(status=201)
-
+        request.data['prod'] = self.kwargs.get('pk')
+        ser = ReviewSerializer(data=request.data)
+        ser.is_valid()
+        ser.save()
+        qs = Review.objects.filter(prod_id=kwargs.get('pk'))
+        lst = ReviewSerializer(qs, many=True)
+        return Response(data=lst.data)
