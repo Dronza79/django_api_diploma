@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework.authtoken',
     'frontend',
     'app_catalog',
     'app_products',
@@ -134,7 +133,6 @@ MEDIA_URL = 'media/'
 REST_FRAMEWORK = {
     'DATETIME_FORMAT': '%d-%m-%Yг. %H:%M:%S',
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        # 'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication'
     ],
