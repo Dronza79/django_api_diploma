@@ -104,7 +104,7 @@ class Review(models.Model):
     prod = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Продукт', related_name='reviews')
     author = models.CharField(max_length=150, verbose_name='Автор отзыва', blank=True)
     email = models.CharField(max_length=250, verbose_name='Почта автора', blank=True)
-    date = models.DateTimeField(verbose_name='Дата публикации', blank=True, null=True)
+    date = models.DateTimeField(verbose_name='Дата публикации', auto_now_add=True)
     rate = models.PositiveSmallIntegerField(verbose_name='Рейтинг')
     text = models.TextField(verbose_name='Содержание отзыва')
 
@@ -114,24 +114,3 @@ class Review(models.Model):
     class Meta:
         verbose_name = "Отзыв"
         verbose_name_plural = "Отзывы о товарах"
-
-
-
-
-
-    # @property
-    # @admin.display(description='Наименование')
-    # def get_full_name(self):
-    #     return f'{self.type_device} {self.fabricator} {self.model}'
-
-    # @property
-    # def total_review(self):
-
-    # @property
-    # def in_stock(self):
-    #     return self.stock != 0
-    #
-    # @property
-    # def total_sale(self):
-
-    #     return sum(item.quantity for item in self.order_items.all())
