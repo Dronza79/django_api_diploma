@@ -131,4 +131,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 MEDIA_URL = 'media/'
-# MEDIA_URL = 'http://127.0.0.1:8000/media/'
+
+REST_FRAMEWORK = {
+    'DATETIME_FORMAT': '%d-%m-%Yг. %H:%M:%S',
+}
