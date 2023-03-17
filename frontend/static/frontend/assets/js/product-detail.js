@@ -30,7 +30,10 @@ var mix = {
                 email: this.review.email,
                 text: this.review.text,
                 rate: this.review.rate
-            }).then(data => {
+            },{
+                headers: {
+                    'X-CSRFToken': this.getCookie('csrftoken')
+            }}).then(data => {
                 this.product.reviews = data
                 alert('Отзыв опубликован')
                 this.review.author = ''
@@ -39,8 +42,9 @@ var mix = {
                 this.review.rate = 5
             }).catch(() => {
                 console.warn('Ошибка при публикации отзыва')
+                console.log(this.getCookie('csrftoken'))
             })
-        }
+        },
     },
     mounted () {
         this.getProduct();
