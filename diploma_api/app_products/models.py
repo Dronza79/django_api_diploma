@@ -15,6 +15,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Цена', default=0)
     count = models.PositiveIntegerField(verbose_name='В наличии', default=0)
     date = models.DateTimeField(auto_now=True, verbose_name='Обновлен')
+    limited = models.BooleanField(verbose_name='Лимитированные товары', default=False)
     feature = models.ManyToManyField('TitleProperty', through='PropertyProduct')
 
     def __str__(self):
@@ -36,7 +37,7 @@ class Product(models.Model):
 
     @property
     def href(self):
-        return f'/catalog/{self.pk}'
+        return f'/product/{self.pk}'
 
     @property
     def images(self):
@@ -60,7 +61,7 @@ class Product(models.Model):
         return []
 
     # @property
-    # def reviews(self):
+    # def count_reviews(self):
     #     return []
 
 
@@ -102,7 +103,7 @@ class PropertyProduct(models.Model):
 
 class Review(models.Model):
     prod = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Продукт', related_name='reviews')
-    author = models.CharField(max_length=150, verbose_name='Автор отзыва', blank=True)
+    author = models.CharField(max_length=150, verbose_name='Автор отзыва')
     email = models.CharField(max_length=250, verbose_name='Почта автора', blank=True)
     date = models.DateTimeField(verbose_name='Дата публикации', auto_now_add=True)
     rate = models.PositiveSmallIntegerField(verbose_name='Рейтинг')

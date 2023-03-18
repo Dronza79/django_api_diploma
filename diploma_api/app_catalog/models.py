@@ -22,7 +22,7 @@ class Category(models.Model):
     @property
     @admin.display(description='Относительный путь')
     def href(self):
-        return f'catalog/{self.pk}'
+        return f'/catalog/{self.pk}'
 
     class Meta:
         verbose_name = 'Категория'

@@ -34,14 +34,14 @@ class ReviewInLine(admin.StackedInline):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     ordering = ['id']
-    list_per_page = 10
+    list_per_page = 25
     list_filter = ["category"]
     list_display = [
         'id', 'title', 'category', 'price', 'count', 'slug',
-        "date", 'rating', 'total_review'
+        "date", 'rating', 'total_review', 'limited'
     ]
     list_display_links = ['title']
-    list_editable = ['price', 'count']
+    list_editable = ['price', 'count', 'limited']
     prepopulated_fields = {'slug': ('title',)}
     inlines = [
         PropertyInline,
@@ -54,7 +54,7 @@ class ProductAdmin(admin.ModelAdmin):
         }),
         ('Настройки продаж', {
             'classes': 'wide',
-            'fields': (('price', 'count'),),
+            'fields': (('price', 'count'), 'limited'),
         }),
         ('Категория и описание', {
             'classes': 'wide',

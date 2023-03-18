@@ -40,9 +40,10 @@ var mix = {
                 this.review.email = ''
                 this.review.text = ''
                 this.review.rate = 5
-            }).catch(() => {
-                console.warn('Ошибка при публикации отзыва')
                 console.log(this.getCookie('csrftoken'))
+            }).catch(() => {
+                alert('Ошибка публикации')
+                console.warn('Ошибка при публикации отзыва')
             })
         },
     },

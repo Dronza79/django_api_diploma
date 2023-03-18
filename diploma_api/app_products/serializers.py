@@ -36,8 +36,40 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = [
-            'id', 'category', 'price', 'count', 'date',
-            'title', 'description', 'fullDescription', 'href',
-            'freeDelivery', 'images', 'tags', 'reviews',
-            'rating', 'specifications',
+            'id',
+            'category',
+            'price',
+            'count',
+            'date',
+            'title',
+            'description',
+            'fullDescription',
+            'href',
+            'freeDelivery',
+            'images',
+            'tags',
+            'reviews',
+            'rating',
+            'specifications',
+        ]
+
+
+class ProductLimitedSerializer(serializers.ModelSerializer):
+    reviews = serializers.ReadOnlyField(source='total_review')
+    class Meta:
+        model = Product
+        fields = [
+            'id',
+            'category',
+            'price',
+            'count',
+            'date',
+            'title',
+            'description',
+            'href',
+            'freeDelivery',
+            'images',
+            'tags',
+            'reviews',
+            'rating',
         ]
