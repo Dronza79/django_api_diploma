@@ -13,6 +13,6 @@ class IconInline(admin.TabularInline):
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     ordering = ('pk',)
-    list_display = ['title', 'parent', 'href', 'get_icon']
+    list_display = ['id', 'title', 'parent', 'href', 'get_icon']
     inlines = [IconInline]
 

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from app_catalog.models import Category, Image
+from .models import Category, Image
 
 
 class RecursiveCategorySerializer(serializers.Serializer):

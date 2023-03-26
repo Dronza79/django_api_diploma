@@ -45,8 +45,11 @@ var mix = {
                 page = 1
             }
             const PAGE_LIMIT = 20
+            const categoryId = location.pathname.startsWith('/catalog/')
+            ? Number(location.pathname.replace('/catalog/', ''))
+            : null
             const tags = this.topTags.filter(tag => !!tag.selected).map(tag => tag.id)
-            this.getData("/api/catalog", {
+            this.getData(`/api/catalog/${categoryId}`, {
                 page,
                 category: this.category,
                 sort: this.selectedSort ? this.selectedSort.id : null,

@@ -73,3 +73,8 @@ class ProductLimitedSerializer(serializers.ModelSerializer):
             'reviews',
             'rating',
         ]
+
+# class MyUserProfileSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Profile
+#         fields = ['fullname', 'phone', 'avatar', 'email']
