@@ -3,8 +3,8 @@ from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import Product, Review
-from .serializers import ProductSerializer, ReviewSerializer, ProductLimitedSerializer
+from .models import Product, Review, Tag
+from .serializers import ProductSerializer, ReviewSerializer, ProductLimitedSerializer, TagsSerializer
 
 
 class ProductDetailView(generics.RetrieveAPIView):
@@ -46,3 +46,9 @@ class ProductPopularView(ProductLimitedView):
         qs = Product.objects.prefetch_related('reviews').annotate(num_comm=Count('reviews')).exclude(num_comm__lt=3)
         qs = qs.order_by('-num_comm', 'price', '-count')
         return qs[:20]
+
+
+class TagsView(generics.ListAPIView):
+    serializer_class = TagsSerializer
+    queryset = Tag.objects.all()
+

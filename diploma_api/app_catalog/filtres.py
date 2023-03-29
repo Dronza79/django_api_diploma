@@ -3,7 +3,8 @@ from app_catalog.models import Category
 
 def sort_filter(request, qs, **kwargs):
     print('request=', request.query_params)
-    print(f'qs={qs}\n count={qs.count()}')
+    print(f'qs={qs}')
+    print(f'count={qs.count()}')
     print('kwargs=', kwargs)
     data = request.query_params
     category = Category.objects.filter(id=kwargs.get('id')).first()

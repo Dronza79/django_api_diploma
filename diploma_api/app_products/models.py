@@ -1,6 +1,7 @@
+import re
 from statistics import mean
 
-import transliterate
+from transliterate import translit, slugify, detect_language
 from django.contrib import admin
 from django.db import models
 
@@ -17,13 +18,16 @@ class Product(models.Model):
     date = models.DateTimeField(auto_now=True, verbose_name='Обновлен')
     limited = models.BooleanField(verbose_name='Лимитированные товары', default=False)
     feature = models.ManyToManyField('TitleProperty', through='PropertyProduct')
+    tags = models.ManyToManyField('Tag', verbose_name='Таги', related_name='products')
 
     def __str__(self):
         return f'{self.title}'
 
     def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = transliterate.slugify(f'{self.title}')
+        if not re.fullmatch(r'[а-яА-ЯёЁ]+', self.title):
+            self.slug = slugify(translit(self.title, 'ru'))
+        else:
+            self.slug = slugify(self.title)
         return super().save(*args, **kwargs)
 
     class Meta:
@@ -56,9 +60,9 @@ class Product(models.Model):
         # return self.price > settings.min_cost_for_free_delivery
         return True
 
-    @property
-    def tags(self):
-        return []
+    # @property
+    # def tags(self):
+    #     return []
 
     # @property
     # def count_reviews(self):
@@ -115,3 +119,18 @@ class Review(models.Model):
     class Meta:
         verbose_name = "Отзыв"
         verbose_name_plural = "Отзывы о товарах"
+
+
+class Tag(models.Model):
+    name = models.CharField(max_length=20)
+    id = models.SlugField(max_length=20, blank=True, primary_key=True)
+
+    def save(self, *args, **kwargs):
+        if not re.fullmatch(r'[а-яА-ЯёЁ]+', self.name):
+            self.id = slugify(translit(self.name, 'ru'))
+        else:
+            self.id = slugify(self.name)
+        return super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f'{self.name}'

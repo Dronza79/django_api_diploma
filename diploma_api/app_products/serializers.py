@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Product, PropertyProduct, ImageProduct, Review
+from .models import Product, PropertyProduct, ImageProduct, Review, Tag
 
 
 class PropertySerializer(serializers.ModelSerializer):
@@ -73,6 +73,13 @@ class ProductLimitedSerializer(serializers.ModelSerializer):
             'reviews',
             'rating',
         ]
+
+
+class TagsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = '__all__'
+
 
 # class MyUserProfileSerializer(serializers.ModelSerializer):
 #     class Meta:

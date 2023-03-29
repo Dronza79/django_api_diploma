@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Product, ImageProduct, PropertyProduct, TitleProperty, Review
+from .models import Product, ImageProduct, PropertyProduct, TitleProperty, Review, Tag
 
 
 def register_hidden_models(*model_names):
@@ -40,6 +40,7 @@ class ProductAdmin(admin.ModelAdmin):
         'id', 'title', 'category', 'price', 'count', 'slug',
         "date", 'rating', 'total_review', 'limited'
     ]
+    filter_horizontal = 'tags',
     list_display_links = ['title']
     list_editable = ['price', 'count', 'limited']
     prepopulated_fields = {'slug': ('title',)}
@@ -50,7 +51,11 @@ class ProductAdmin(admin.ModelAdmin):
     ]
     fieldsets = (
         (None, {
-            'fields': ('title', 'slug',)
+            'fields': ('title', 'slug')
+        }),
+        ('Теги', {
+            'classes': ('collapse',),
+            'fields': ('tags',)
         }),
         ('Настройки продаж', {
             'classes': 'wide',
@@ -63,3 +68,8 @@ class ProductAdmin(admin.ModelAdmin):
 
 
 register_hidden_models(TitleProperty, Review)
+
+
+@admin.register(Tag)
+class TagsAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'id': ('name',)}
