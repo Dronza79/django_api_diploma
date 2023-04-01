@@ -45,7 +45,7 @@ class ProductPopularView(ProductLimitedView):
     def get_queryset(self):
         qs = Product.objects.prefetch_related('reviews').annotate(num_comm=Count('reviews')).exclude(num_comm__lt=3)
         qs = qs.order_by('-num_comm', 'price', '-count')
-        return qs[:20]
+        return qs[:8]
 
 
 class TagsView(generics.ListAPIView):

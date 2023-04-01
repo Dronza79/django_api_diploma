@@ -79,9 +79,3 @@ class TagsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
         fields = '__all__'
-
-
-# class MyUserProfileSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Profile
-#         fields = ['fullname', 'phone', 'avatar', 'email']

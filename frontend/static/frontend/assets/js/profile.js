@@ -16,7 +16,7 @@ var mix = {
                 return
             }
 
-            this.postData('/api/profile', {
+            this.postData('/api/profile/', {
                 fullName: this.fullName,
                 avatar: this.avatar,
                 phone: this.phone,

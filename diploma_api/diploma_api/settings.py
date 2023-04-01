@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'frontend',
     'app_catalog',
     'app_products',
+    'app_profiles',
 ]
 
 MIDDLEWARE = [
@@ -140,3 +141,5 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny',
     ]
 }
+
+# APPEND_SLASH = False
