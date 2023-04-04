@@ -25,6 +25,11 @@ def sort_filter(request, qs, **kwargs):
         print('thd_filter=', thd_filter)
         qs = qs.filter(count__gt=0)
 
+    four_filter = data.getlist('tags[]')
+    if four_filter:
+        print('four_filter=', four_filter)
+        qs = qs.filter(tags__in=four_filter)
+
     price_from = data.get('filter[minPrice]')
     price_to = data.get('filter[maxPrice]')
     qs = qs.filter(price__gte=price_from, price__lte=price_to)

@@ -1,5 +1,3 @@
-from statistics import mean
-
 from django.db.models import Count
 from rest_framework import generics
 
@@ -23,7 +21,7 @@ class CatalogListView(generics.ListAPIView):
     def get_queryset(self, **kwargs):
         qs = (
             Product.objects.select_related('category')
-            .prefetch_related('pictures', 'specifications', 'reviews')
+            .prefetch_related('pictures', 'specifications', 'reviews', 'tags')
             .alias(rating=Count('reviews__rate'))
             .alias(rev=Count('reviews'))
         )

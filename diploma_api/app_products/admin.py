@@ -70,6 +70,15 @@ class ProductAdmin(admin.ModelAdmin):
 register_hidden_models(TitleProperty, Review)
 
 
+class ProductInline(admin.TabularInline):
+    model = Product.tags.through
+    verbose_name = "Продукты"
+    verbose_name_plural = "Продукты"
+    extra = 1
+
+
 @admin.register(Tag)
 class TagsAdmin(admin.ModelAdmin):
     prepopulated_fields = {'id': ('name',)}
+    inlines = [ProductInline]
+
