@@ -4,7 +4,7 @@ info:
   version: 1.0.0
 tags:
   - name: catalog
-  - name: basket
+  - name: app_basket
   - name: order
   - name: payment
   - name: profile
@@ -274,8 +274,8 @@ paths:
   /basket:
     get:
       tags:
-        - basket
-      description: 'Get items in basket'
+        - app_basket
+      description: 'Get items in app_basket'
       responses:
         '200':
           description: successful operation
@@ -285,8 +285,8 @@ paths:
                 $ref: '#/components/schemas/Products'
     post:
       tags:
-        - basket
-      description: 'Add item to basket'
+        - app_basket
+      description: 'Add item to app_basket'
       requestBody:
         content:
           application/json:
@@ -310,8 +310,8 @@ paths:
                 $ref: '#/components/schemas/Basket'
     delete:
       tags:
-        - basket
-      description: 'Remove item from basket'
+        - app_basket
+      description: 'Remove item from app_basket'
       requestBody:
         content:
           application/json:
@@ -843,7 +843,7 @@ components:
     Basket:
       type: array
       xml:
-        name: basket
+        name: app_basket
       items:
         $ref: '#/components/schemas/OrderProduct'
     Payment:

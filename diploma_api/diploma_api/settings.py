@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'app_catalog',
     'app_products',
     'app_profiles',
+    'app_basket',
 ]
 
 MIDDLEWARE = [
