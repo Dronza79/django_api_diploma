@@ -4,7 +4,7 @@ info:
   version: 1.0.0
 tags:
   - name: catalog
-  - name: app_basket
+  - name: basket
   - name: order
   - name: payment
   - name: profile
@@ -34,8 +34,22 @@ paths:
           description: search text
           required: false
           schema:
-            type: string
-            default: ''
+            type: object
+            properties:
+              name:
+                type: string
+              minPrice:
+                type: number
+              maxPrice:
+                type: number
+              freeDelivery:
+                type: boolean
+                default: false
+              available:
+                type: boolean
+                default: true
+          style: deepObject
+          explode: true
         - name: page
           in: query
           description: page
@@ -105,8 +119,22 @@ paths:
           description: search text
           required: false
           schema:
-            type: string
-            default: ''
+            type: object
+            properties:
+              name:
+                type: string
+              minPrice:
+                type: number
+              maxPrice:
+                type: number
+              freeDelivery:
+                type: boolean
+                default: false
+              available:
+                type: boolean
+                default: true
+          style: deepObject
+          explode: true
         - name: page
           in: query
           description: page
@@ -274,8 +302,8 @@ paths:
   /basket:
     get:
       tags:
-        - app_basket
-      description: 'Get items in app_basket'
+        - basket
+      description: 'Get items in basket'
       responses:
         '200':
           description: successful operation
@@ -285,8 +313,8 @@ paths:
                 $ref: '#/components/schemas/Products'
     post:
       tags:
-        - app_basket
-      description: 'Add item to app_basket'
+        - basket
+      description: 'Add item to basket'
       requestBody:
         content:
           application/json:
@@ -310,8 +338,8 @@ paths:
                 $ref: '#/components/schemas/Basket'
     delete:
       tags:
-        - app_basket
-      description: 'Remove item from app_basket'
+        - basket
+      description: 'Remove item from basket'
       requestBody:
         content:
           application/json:
@@ -843,7 +871,7 @@ components:
     Basket:
       type: array
       xml:
-        name: app_basket
+        name: basket
       items:
         $ref: '#/components/schemas/OrderProduct'
     Payment:
@@ -894,3 +922,9 @@ components:
         name:
           type: string
           example: 'Gaming'
+
+
+
+
+
+

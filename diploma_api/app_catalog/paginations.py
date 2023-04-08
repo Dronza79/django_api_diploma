@@ -5,7 +5,7 @@ from rest_framework.response import Response
 
 
 class PaginationCatalog(PageNumberPagination):
-    page_size = 20
+    page_size = 12
 
     def get_paginated_response(self, data):
         count = self.page.paginator.count

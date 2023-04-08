@@ -49,12 +49,25 @@ var mix = {
             ? Number(location.pathname.replace('/catalog/', ''))
             : null
             const tags = this.topTags.filter(tag => !!tag.selected).map(tag => tag.id)
+            const min = document.querySelector('input[name=minPrice]').value
+            const max =  document.querySelector('input[name=maxPrice]').value
+
+            if (min !== 0) {
+                this.filter.minPrice = min
+            }
+            if (max !== 100000) {
+                this.filter.maxPrice = max
+            }
             this.getData(`/api/catalog/${categoryId}`, {
                 page,
                 category: this.category,
                 sort: this.selectedSort ? this.selectedSort.id : null,
                 sortType: this.selectedSort ? this.selectedSort.selected : null,
-                filter: this.filter,
+                filter: {
+                    ...this.filter,
+                    minPrice: min,
+                    maxPrice: max
+                },
                 tags,
                 limit: PAGE_LIMIT
             })
@@ -90,7 +103,7 @@ var mix = {
             filter: {
                 name: '',
                 minPrice: 0,
-                maxPrice: 50000,
+                maxPrice: 100000,
                 freeDelivery: false,
                 available: true
             }

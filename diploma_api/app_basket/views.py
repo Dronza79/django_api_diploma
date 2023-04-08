@@ -22,7 +22,6 @@ class BasketView(APIView):
         return Response(data, status=status.HTTP_200_OK)
 
     def post(self, request):
-        print(request.data)
         get_cart(request).add(
             product=Product.objects.get(id=request.data.get('id')),
             quantity=request.data.get('count')
