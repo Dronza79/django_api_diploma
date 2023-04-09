@@ -42,10 +42,10 @@ class UserCart(models.Model):
             }
             yield data
 
-    def add(self, product, quantity=1, update_quantity=False):
+    def add(self, product, quantity=1, dec=False):
         cart = self.inside.get_or_create(user_cart=self, product=product)[0]
-        if update_quantity:
-            cart.quantity = quantity
+        if dec:
+            cart.quantity -= quantity
         else:
             cart.quantity += quantity
         cart.cost = str(product.price)

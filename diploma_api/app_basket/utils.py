@@ -23,3 +23,15 @@ def get_cart(request):
             request.session.modified = True
     # print('словарь корзины=', request.session.__dict__)
     return cart
+
+
+def get_data_cart(request):
+    return [{
+        'id': item.product.id,
+        'title': item.product.title,
+        'price': item.product.price,
+        'description': item.product.description,
+        'count': item.quantity,
+        'href': item.product.href,
+        'images': item.product.images,
+    } for item in get_cart(request).inside.all()]
