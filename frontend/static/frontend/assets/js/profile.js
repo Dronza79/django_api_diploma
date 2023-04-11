@@ -16,11 +16,15 @@ var mix = {
                 return
             }
 
-            this.postData('/api/profile/', {
+            this.putData('/api/profile/', {
                 fullName: this.fullName,
                 avatar: this.avatar,
                 phone: this.phone,
                 email: this.email
+            },{
+                headers: {
+                        'X-CSRFToken': this.getCookie('csrftoken')
+                }
             }).then(data => {
                alert('Успешно сохранено')
             }).catch(() => {
@@ -37,23 +41,38 @@ var mix = {
                 alert('В форме присутствуют незаполненные поля или пароли не совпадают')
                 return
             }
-            this.postData('/api/profile/password').then(data => {
-               alert('Успешно сохранено')
-                this.passwordCurrent = ''
-                this.password = ''
-                this.passwordReply = ''
+            this.postData('/api/profile/password',
+                {
+                    'passwordCurrent': this.passwordCurrent,
+                    'password': this.password
+                },{
+                    headers: {
+                        'X-CSRFToken': this.getCookie('csrftoken')
+                    }
+                }
+            ).then((data) => {
+                if (data.errors) {
+                    alert(data.errors)
+                } else {
+                    alert('Успешно сохранено')
+                    this.passwordCurrent = ''
+                    this.password = ''
+                    this.passwordReply = ''
+                }
             }).catch(() => {
                 console.warn('Ошибка при сохранении пароля')
             })
         },
         setAvatar (event) {
+            let formData = new FormData()
             const target = event.target
             const file = target.files?.[0] ?? null
             if (!file) return
+            formData.append('avatar', file)
 
-            this.postData('/api/profile/avatar', file, {
+            this.postData('/api/profile/avatar', formData, {
                 headers: {
-                  'Content-Type': file.type,
+                  'Content-Type': `multipart/form-data`,
                   'X-CSRFToken': this.getCookie('csrftoken')
                 },
             }).then((data) => {
