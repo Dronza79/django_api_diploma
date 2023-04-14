@@ -85,3 +85,6 @@ class InsideCart(models.Model):
     def save(self, *args, **kwargs):
         self.cost = str(self.product.price)
         return super().save(*args, **kwargs)
+
+    def get_total_value(self):
+        return self.quantity * self.cost
